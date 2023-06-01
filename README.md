@@ -8,8 +8,12 @@ to tackle the challenge of long waiting times associated
 with loading large-scale pretrained language models,
 such as HuggingFace models, into GPU or CPU memory. 
 
+<img src="https://riversun.github.io/loadtime/loadtime_std.gif">
+
+
 With **LoadTime**, instead of waiting in uncertainty, 
 you can visualize the progress of your loading process.
+
 
 Of course, it can also be used for other long-term operations.
 
@@ -26,11 +30,15 @@ pip install loadtime
 
 - **Real-time tracking**: LoadTime provides real-time tracking of the loading process. No more staring at a static screen!
 
+
 - **Progress Bar**: The package displays a progress bar, showing you how much of the process has been completed and how much is still remaining. It takes the guesswork out of waiting!
+
 
 - **Past Loading Time Cache**: One unique feature of LoadTime is its ability to remember the time it took to load a model in the past. The package automatically caches the total loading time of your operations. The next time you load the same model, LoadTime uses this cached information to provide an even more accurate progress bar.
 
+
 - **Customizable Display**: LoadTime allows you to customize the progress display with your own messages. You can tailor the tool to fit your personal needs.
+
 
 - **Optimized for HuggingFace Models**: LoadTime has been optimized for loading HuggingFace models, with special handling of the download progress display when the model is not cached locally.
 

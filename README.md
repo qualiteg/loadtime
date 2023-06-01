@@ -62,15 +62,15 @@ model = LoadTime(name=model_path,
 
 ## Initial Parameters
 
-  | Parameter | Description |
-    |-----------|-------------|
-    | name      | Name of the long-term process. For loading HuggingFace models, specify the model name. |
-    | message   | Specify the message to be displayed. If omitted, the default message is used. |
-    | pbar      | Set to True to display the progress bar and percentage. |
-    | dirname   | Directory name for cache storage. |
-    | hf        | Set to True to use for time display for loading HuggingFace models. If the model data has not yet been downloaded to the disk, HuggingFace's loader displays the download progress, so this library does not display it. |
-    | fn        | Function to execute the long-term process. |
-    | fn_print  | Function to perform the display. If omitted, it will be output to the console. |
+| Parameter | Description |
+|-----------|-------------|
+| name      | Name of the long-term process. For loading HuggingFace models, specify the model name. |
+| message   | Specify the message to be displayed. If omitted, the default message is used. |
+| pbar      | Set to True to display the progress bar and percentage. |
+| dirname   | Directory name for cache storage. |
+| hf        | Set to True to use for time display for loading HuggingFace models. If the model data has not yet been downloaded to the disk, HuggingFace's loader displays the download progress, so this library does not display it. |
+| fn        | Function to execute the long-term process. |
+| fn_print  | Function to perform the display. If omitted, it will be output to the console. |
 
 
 Take control of your loading times with LoadTime!

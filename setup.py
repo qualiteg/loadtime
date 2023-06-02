@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="loadtime",
-    version="1.0.2",
+    version="1.0.3",
     author="Tom Misawa",
     author_email="riversun.org@gmail.com",
     description="Package to display a progress bar for long processes with uncertain end times",

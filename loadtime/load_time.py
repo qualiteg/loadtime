@@ -29,9 +29,11 @@ class LoadTime:
         self.show_percentage = pbar
         self._load_data()  # Load cached data if exists
         self.last_message = None
+        self.last_message_fin = None
         self.elapsed_time = -1
         self.fn_print = None
         self.hf = hf
+        self.is_model_cached=self.is_model_cached(self.name)
 
         # If a print function is provided, use it, else print to the console
         if fn_print is not None:
@@ -44,7 +46,7 @@ class LoadTime:
 
         # If this is for a HuggingFace model and the model is not cached yet, suppress the output
 
-        if self.hf is True and self.is_model_cached(self.name) is False:
+        if self.hf is True and self.is_model_cached is False:
             self.fn_print = None
 
         if self.fn is None:
@@ -105,7 +107,8 @@ class LoadTime:
         while not self.stop_event.is_set():
             self.elapsed_time = time.time() - self.start_time
             formatted_time = self._get_formatted_time(self.elapsed_time)
-            total_time_disp = f"{formatted_time}"
+            total_time_disp = f"{formatted_time} (Now recording loading time)"
+            total_time_disp_fin = f"{formatted_time}/{formatted_time}"
             total_time_in_sec = self.stored_data.get('total_time', None)
 
             progress_disp = ""
@@ -122,8 +125,11 @@ class LoadTime:
 
             if self.message is not None:
                 self.last_message = f'\r{self.message}{total_time_disp}'
+                self.last_message_fin = f'\r{self.message}{total_time_disp_fin}'
+
             else:
                 self.last_message = f'\rLoading "{self.name}" ... {total_time_disp}'
+                self.last_message_fin = f'\rLoading "{self.name}" ... {total_time_disp_fin}'
 
             if self.fn_print is not None:
                 self.fn_print(f'\r{self.last_message}{progress_disp}')
@@ -186,14 +192,15 @@ class LoadTime:
                     self.fn_print(f'\r{self.last_message}{self._create_percentage_disp(1)}\n')
             else:
                 if self.fn_print is not None:
-                    self.fn_print(f'\r{self.last_message}\n')
+                    self.fn_print(f'\r{self.last_message_fin}\n')
 
             self.stop_event.set()
             self.thread.join()
             self.thread = None
             self.stop_event.clear()
             self.stored_data["total_time"] = self.elapsed_time
-            self.save_dict_to_json(self.stored_data)
+            if self.is_model_cached:
+                self.save_dict_to_json(self.stored_data)
         return self
 
     def save_dict_to_json(self, data_dict):

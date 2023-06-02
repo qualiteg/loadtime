@@ -1,6 +1,6 @@
 import pytest
 import time
-from chatstream import LoadTime  # 実際のモジュール名に置き換えてください
+from loadtime import LoadTime  # 実際のモジュール名に置き換えてください
 
 
 def long_running_function():

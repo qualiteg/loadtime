@@ -3,7 +3,8 @@ import threading
 from datetime import timedelta
 import os
 import json
-
+import traceback
+import sys
 
 class LoadTime:
     def __init__(self, name="", message=None, pbar=True, dirname="loadtime", hf=False, fn=None, fn_print=None):
@@ -164,9 +165,15 @@ class LoadTime:
             self.start_time = time.time()
             self.thread = threading.Thread(target=self._display_time)
             self.thread.start()
-            ret = self.fn()
-            self.fn = None
-            self._stop()
+
+            try:
+                ret = self.fn()
+            except Exception as e:
+                tb = traceback.format_exc()
+                sys.stderr.write(tb)
+            finally:
+                self.fn = None
+                self._stop()
         return ret
 
     def _stop(self):
@@ -175,9 +182,11 @@ class LoadTime:
         """
         if self.thread is not None:
             if self.stored_data.get("total_time", None) is not None:
-                self.fn_print(f'\r{self.last_message}{self._create_percentage_disp(1)}\n')
+                if self.fn_print is not None:
+                    self.fn_print(f'\r{self.last_message}{self._create_percentage_disp(1)}\n')
             else:
-                self.fn_print(f'\r{self.last_message}\n')
+                if self.fn_print is not None:
+                    self.fn_print(f'\r{self.last_message}\n')
 
             self.stop_event.set()
             self.thread.join()

@@ -40,9 +40,11 @@ from loadtime import LoadTime
 
 model_path = "togethercomputer/RedPajama-INCITE-Chat-3B-v1"
 
-tokenizer = AutoTokenizer.from_pretrained(model_path)
 model = LoadTime(name=model_path,
                  fn=lambda: AutoModelForCausalLM.from_pretrained(model_path, torch_dtype=torch.float16))()
+
+tokenizer = AutoTokenizer.from_pretrained(model_path) # tokenizerはモデル読み込みの後で取得します
+
 ```
 
 ## 初期化パラメータ一覧

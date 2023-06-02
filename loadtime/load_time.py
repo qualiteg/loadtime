@@ -42,6 +42,7 @@ class LoadTime:
             self.fn_print = console_print_func
 
         # If this is for a HuggingFace model and the model is not cached yet, suppress the output
+
         if self.hf is True and self.is_model_cached(self.name) is False:
             self.fn_print = None
 
@@ -123,7 +124,8 @@ class LoadTime:
             else:
                 self.last_message = f'\rLoading "{self.name}" ... {total_time_disp}'
 
-            self.fn_print(f'\r{self.last_message}{progress_disp}')
+            if self.fn_print is not None:
+                self.fn_print(f'\r{self.last_message}{progress_disp}')
 
             time.sleep(0.5)  # update every 0.5 seconds
 

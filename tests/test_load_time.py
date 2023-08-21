@@ -25,10 +25,10 @@ def test_loadtime_output_for_long_running_function_when_first_try():
     assert output[0].startswith('\r')
 
     assert output[0].replace('\r', '') \
-           == 'Loading "long_running_test" ... 00:00'
+           == 'Loading "long_running_test" ... 00:00 (Now recording loading time)'
 
     assert output[len(output) - 1].replace('\r', '') \
-           == 'Loading "long_running_test" ... 00:04\n'
+           == 'Loading "long_running_test" ... 00:04/00:04\n'
 
     assert "Loading \"long_running_test\" ..." in output_str
 
@@ -45,7 +45,7 @@ def test_loadtime_output_for_long_running_function_when_after_second_try():
 
     # 1回目、計測データを記録するための実行
     timer = LoadTime(name="long_running_test", fn=long_running_function, fn_print=print_to_nothing)
-    timer.clear_stored_data()  # いったん計測データをクリアする
+    timer.clear_stored_data()  # いったん保存済計測データをクリアする
     timer.start()
 
     # 2回目、プログレスバーつき出力を検証するための実行

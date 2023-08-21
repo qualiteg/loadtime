@@ -6,6 +6,7 @@ import json
 import traceback
 import sys
 
+
 class LoadTime:
     def __init__(self, name="", message=None, pbar=True, dirname="loadtime", hf=False, fn=None, fn_print=None):
         """
@@ -33,7 +34,7 @@ class LoadTime:
         self.elapsed_time = -1
         self.fn_print = None
         self.hf = hf
-        self.is_model_cached=self.is_model_cached(self.name)
+        self.is_model_cached = self.is_model_cached(self.name)
 
         # If a print function is provided, use it, else print to the console
         if fn_print is not None:
@@ -92,10 +93,14 @@ class LoadTime:
 
         # Build the full path
         home_dir = os.path.expanduser("~")
-        full_path = os.path.join(home_dir, ".cache", "huggingface", "hub", model_path)
+        model_cache_full_path = os.path.join(home_dir, ".cache", "huggingface", "hub", model_path)
+
+        transformers_cache = os.environ.get('TRANSFORMERS_CACHE')
+        if transformers_cache:
+            model_cache_full_path = os.path.join(transformers_cache, model_path)
 
         # Check if the directory exists and if it contains any files
-        if os.path.isdir(full_path) and os.listdir(full_path):
+        if os.path.isdir(model_cache_full_path) and os.listdir(model_cache_full_path):
             return True
         else:
             return False
@@ -186,6 +191,7 @@ class LoadTime:
         """
         Stops the timer and the thread, saves the elapsed time for future reference.
         """
+
         if self.thread is not None:
             if self.stored_data.get("total_time", None) is not None:
                 if self.fn_print is not None:
@@ -199,8 +205,7 @@ class LoadTime:
             self.thread = None
             self.stop_event.clear()
             self.stored_data["total_time"] = self.elapsed_time
-            if self.is_model_cached:
-                self.save_dict_to_json(self.stored_data)
+            self.save_dict_to_json(self.stored_data)
         return self
 
     def save_dict_to_json(self, data_dict):
@@ -221,7 +226,6 @@ class LoadTime:
                 json.dump(data_dict, f)
         finally:
             pass
-
 
     def load_dict_from_json(self):
         """

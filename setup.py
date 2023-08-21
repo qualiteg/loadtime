@@ -2,13 +2,13 @@ from setuptools import setup, find_packages
 
 setup(
     name="loadtime",
-    version="1.0.3",
-    author="Tom Misawa",
-    author_email="riversun.org@gmail.com",
+    version="1.0.4",
+    author="Qualiteg Inc.",
+    author_email="qualiteger@qualiteg.com",
     description="Package to display a progress bar for long processes with uncertain end times",
     long_description=open("README.md", "r").read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/riversun/LoadTime",
+    url="https://github.com/qualiteg/LoadTime",
     packages=find_packages(exclude=["tests.*", "tests", "examples.*", "examples"]),
     tests_require=["pytest"],
     classifiers=[

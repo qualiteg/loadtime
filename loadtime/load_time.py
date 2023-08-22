@@ -137,7 +137,8 @@ class LoadTime:
                 self.last_message_fin = f'\rLoading "{self.name}" ... {total_time_disp_fin}'
 
             if self.fn_print is not None:
-                self.fn_print(f'\r{self.last_message}{progress_disp}')
+                if self.is_model_cached:
+                    self.fn_print(f'\r{self.last_message}{progress_disp}')
 
             time.sleep(0.5)  # update every 0.5 seconds
 

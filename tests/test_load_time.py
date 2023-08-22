@@ -17,6 +17,7 @@ def test_loadtime_output_for_long_running_function_when_first_try():
         output.append(str)
 
     timer = LoadTime(name="long_running_test", fn=long_running_function, fn_print=print_to_list)
+    timer.is_model_cached=True # UTのときはモデルダウンロード済フラグを強制的にONにしてモデルがダウンロード済である状態で行う
     timer.clear_stored_data()  # いったん計測データをクリアする
     timer.start()  # 手動開始
 
@@ -45,11 +46,14 @@ def test_loadtime_output_for_long_running_function_when_after_second_try():
 
     # 1回目、計測データを記録するための実行
     timer = LoadTime(name="long_running_test", fn=long_running_function, fn_print=print_to_nothing)
+    timer.is_model_cached = True  # UTのときはモデルダウンロード済フラグを強制的にONにしてモデルがダウンロード済である状態で行う
     timer.clear_stored_data()  # いったん保存済計測データをクリアする
     timer.start()
 
     # 2回目、プログレスバーつき出力を検証するための実行
-    LoadTime(name="long_running_test", fn=long_running_function, fn_print=print_to_list)()
+    timer2=LoadTime(name="long_running_test", fn=long_running_function, fn_print=print_to_list)
+    timer2.is_model_cached = True  # UTのときはモデルダウンロード済フラグを強制的にONにしてモデルがダウンロード済である状態で行う
+    timer2.start()
 
     output_str = "".join(output)
 

@@ -1,40 +1,37 @@
-# Env
+# How to release loadtime 
 
-## for development of loadtime
+## for development of loadtime only
 
-### Create virtual env and install related packages
+### Create virtual env and activate it
+
+- Linux 
+
 ```
-conda update -n base -c defaults conda --yes
-conda create --yes -n env-loadtime
-conda activate env-loadtime
-conda install python=3.10.10 --yes
+cd loadtime
+python -m venv venv
+./venv/bin\activate
+```
+
+
+- Windows
+
+```
+cd loadtime
+python -m venv venv
+.\venv\Scripts\activate
+```
+
+### upgrade pip
+
+```
 python -m pip install --upgrade pip
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu117
-pip install accelerate transformers
-pip install fastapi
-pip install fastsession
-pip install tokflow
-pip install "uvicorn[standard]" gunicorn
-pip install loadtime
-pip install pytest
-
 ```
 
-### Remove virtual env
-
-```
-conda deactivate
-conda remove -n env-loadtime --all --yes
-```
-
-## Release
-
-
-### Release tools
+### install packages for release
 
 ```
 pip install setuptools wheel
-python -m pip install --user --upgrade twine
+python -m pip install --upgrade twine
 ```
 
 
@@ -55,3 +52,6 @@ python setup.py sdist bdist_wheel
 ```
 python -m twine upload dist/*
 ```
+
+### Enter credentials
+

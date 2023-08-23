@@ -206,7 +206,8 @@ class LoadTime:
             self.thread = None
             self.stop_event.clear()
             self.stored_data["total_time"] = self.elapsed_time
-            self.save_dict_to_json(self.stored_data)
+            if self.is_model_cached:
+                self.save_dict_to_json(self.stored_data)
         return self
 
     def save_dict_to_json(self, data_dict):

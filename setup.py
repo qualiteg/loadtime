@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="loadtime",
-    version="1.0.5",
+    version="1.0.6",
     author="Qualiteg Inc.",
     author_email="qualiteger@qualiteg.com",
     description="Package to display a progress bar for long processes with uncertain end times",
